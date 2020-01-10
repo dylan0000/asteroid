@@ -74,6 +74,39 @@ function villain () {
 `, Math.randomRange(0, -70), Math.randomRange(0, -100))
     }
 }
+function hero () {
+    alien = sprites.create(img`
+. . . . . . . . . . . . . . . . 
+. . 7 7 7 . . . . . . 7 7 7 . . 
+. . 7 7 7 . . . . . . 7 7 7 . . 
+. . . 7 7 7 . . . . 7 7 7 . . . 
+. . . 7 7 7 7 7 7 7 7 7 7 . . . 
+. . . 7 7 7 7 7 7 7 7 7 7 . . . 
+. . . . 7 7 f 7 7 f 7 7 . . . . 
+. . . 7 7 7 7 7 7 7 7 7 7 . . . 
+. . . 7 7 7 7 7 7 7 7 7 7 . . . 
+. . . 7 7 7 7 7 7 7 7 7 7 . . . 
+. . . 7 7 7 7 7 7 7 7 7 7 . . . 
+. . . 7 7 7 7 7 7 7 7 7 7 . . . 
+. . . . 7 7 7 7 7 7 7 7 . . . . 
+. . . . . 7 7 7 7 7 7 . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, SpriteKind.Player)
+    controller.moveSprite(alien, 85, 85)
+    info.setLife(3)
+}
+function score () {
+    info.changeScoreBy(Math.randomRange(5, 16))
+}
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    otherSprite.destroy()
+    info.changeLifeBy(1)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
+    otherSprite.destroy()
+    overlap()
+})
 // applies to all rock contact
 function overlap () {
     info.changeLifeBy(-1)
@@ -98,41 +131,8 @@ function spawnhp () {
 . . . . . . . . . . . . . . . . 
 `, SpriteKind.Food)
 }
-function score () {
-    info.changeScoreBy(Math.randomRange(5, 16))
-}
-function hero () {
-    alien = sprites.create(img`
-. . . . . . . . . . . . . . . . 
-. . 7 7 7 . . . . . . 7 7 7 . . 
-. . 7 7 7 . . . . . . 7 7 7 . . 
-. . . 7 7 7 . . . . 7 7 7 . . . 
-. . . 7 7 7 7 7 7 7 7 7 7 . . . 
-. . . 7 7 7 7 7 7 7 7 7 7 . . . 
-. . . . 7 7 f 7 7 f 7 7 . . . . 
-. . . 7 7 7 7 7 7 7 7 7 7 . . . 
-. . . 7 7 7 7 7 7 7 7 7 7 . . . 
-. . . 7 7 7 7 7 7 7 7 7 7 . . . 
-. . . 7 7 7 7 7 7 7 7 7 7 . . . 
-. . . 7 7 7 7 7 7 7 7 7 7 . . . 
-. . . . 7 7 7 7 7 7 7 7 . . . . 
-. . . . . 7 7 7 7 7 7 . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`, SpriteKind.Player)
-    controller.moveSprite(alien, 85, 85)
-    info.setLife(3)
-}
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
-    otherSprite.destroy()
-    info.changeLifeBy(1)
-})
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
-    otherSprite.destroy()
-    overlap()
-})
-let alien: Sprite = null
 let mySprite: Sprite = null
+let alien: Sprite = null
 let projectile: Sprite = null
 game.splash("get ready")
 game.splash("random score / 1s")
